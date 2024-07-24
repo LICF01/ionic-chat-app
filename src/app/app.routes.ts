@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AuthGuardService } from './services/auth-guard.service';
 import { UsersPage } from './pages/users/users.page';
 import { GroupsPage } from './pages/groups/groups.page';
+import { ChatRoomComponent } from './components/chat-room/chat-room.component';
 
 export const routes: Routes = [
   {
@@ -12,11 +13,29 @@ export const routes: Routes = [
     children: [
       {
         path: 'users',
-        component: UsersPage,
+        children: [
+          {
+            path: '',
+            component: UsersPage,
+          },
+          {
+            path: ':id',
+            component: ChatRoomComponent,
+          },
+        ],
       },
       {
         path: 'groups',
-        component: GroupsPage,
+        children: [
+          {
+            path: '',
+            component: GroupsPage,
+          },
+          {
+            path: ':id',
+            component: ChatRoomComponent,
+          },
+        ],
       },
       {
         path: '',

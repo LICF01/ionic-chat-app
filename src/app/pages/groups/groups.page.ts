@@ -9,10 +9,13 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
+  IonRippleEffect,
 } from '@ionic/angular/standalone';
 import { ChatService } from 'src/app/services/chat.service';
 import { User } from 'src/app/types/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { Group } from 'src/app/types/group';
 
 @Component({
   selector: 'app-groups',
@@ -29,6 +32,7 @@ import { AuthService } from 'src/app/services/auth.service';
     IonCard,
     IonCardHeader,
     IonCardTitle,
+    IonRippleEffect,
   ],
 })
 export class GroupsPage {
@@ -37,6 +41,7 @@ export class GroupsPage {
   constructor(
     private chatService: ChatService,
     private authService: AuthService,
+    private router: Router,
   ) {
     const user = this.authService.getCurrentUser();
     if (user) {
@@ -60,5 +65,9 @@ export class GroupsPage {
         console.error(error);
       },
     });
+  }
+
+  selectGroup(group: Group) {
+    this.router.navigate(['/groups/', `group-${group.group_id}`]);
   }
 }

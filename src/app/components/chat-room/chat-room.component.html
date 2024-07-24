@@ -1,0 +1,15 @@
+<ion-content [fullscreen]="true">
+  <div class="container">
+    @for (message of messages(); track message.id) {
+      @if (message.sender === "user" + user()?.id) {
+        <ion-chip color="primary" class="from-me">{{
+          message.content
+        }}</ion-chip>
+      } @else {
+        <ion-chip color="medium" class="from-them">{{
+          message.content
+        }}</ion-chip>
+      }
+    }
+  </div>
+</ion-content>
