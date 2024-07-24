@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="toolbar">
+      <ion-title>{{user()?.username}}</ion-title>
+      <ion-button (click)="logout()">
+        <ion-icon name="exit-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="users">
+        <ion-icon name="people-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="groups">Grupos</ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

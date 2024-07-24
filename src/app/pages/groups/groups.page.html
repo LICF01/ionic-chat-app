@@ -1,0 +1,9 @@
+<ion-content [fullscreen]="true">
+  @for (group of groups(); track group.id) {
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{group.name}}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  }
+</ion-content>

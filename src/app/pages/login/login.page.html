@@ -1,0 +1,49 @@
+<ion-content>
+  <div class="container">
+    <ion-icon
+      name="chatbubbles-outline"
+      color="primary"
+      class="logo"
+    ></ion-icon>
+    <ion-text color="primary">
+      <h1>GroupChat</h1>
+    </ion-text>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <ion-input
+        label="Username"
+        labelPlacement="stacked"
+        placeholder="username"
+        fill="outline"
+        formControlName="username"
+      >
+        <ion-icon
+          name="person-outline"
+          slot="start"
+          aria-hidden="true"
+        ></ion-icon>
+      </ion-input>
+      <ion-input
+        type="password"
+        labelPlacement="stacked"
+        label="Contraseña"
+        placeholder="***********"
+        fill="outline"
+        formControlName="password"
+      >
+        <ion-icon
+          name="lock-closed-outline"
+          slot="start"
+          aria-hidden="true"
+        ></ion-icon>
+      </ion-input>
+      <div class="ion-margin ion-text-center">
+        <ion-button type="submit" class="submit-btn">Ingresar</ion-button>
+        <p>¿No está registrado?</p>
+        <p>
+          Puede
+          <a [routerLink]="['/register']">registrarse aquí</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</ion-content>
