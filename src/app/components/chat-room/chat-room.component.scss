@@ -39,3 +39,11 @@
     width: 10px;
   }
 }
+
+ion-toolbar {
+  padding: 0.5rem;
+
+  & form {
+    display: flex;
+  }
+}

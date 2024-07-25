@@ -1,6 +1,6 @@
-<ion-content [fullscreen]="true">
+<ion-content>
   <div class="container">
-    @if (groupMessages().length > 0) {
+    @if (roomType() === "group") {
       @for (message of groupMessages(); track message.id) {
         @if (message.sender === "user" + user()?.id) {
           <ion-chip color="primary" class="from-me">{{
@@ -12,7 +12,7 @@
           }}</ion-chip>
         }
       }
-    } @else if (privateMessages().length > 0) {
+    } @else if (roomType() === "private") {
       @for (message of privateMessages(); track message.id) {
         @if (message.sender_id === user()?.id) {
           <ion-chip color="primary" class="from-me">{{
@@ -33,3 +33,18 @@
     }
   </div>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <form [formGroup]="messageForm" (ngSubmit)="onMessageSubmit()">
+      <ion-input
+        fill="outline"
+        placeholder="Escrive tu mensaje aquí..."
+        formControlName="text"
+      >
+      </ion-input>
+      <ion-button type="submit" fill="clear" slot="end">
+        <ion-icon name="send-outline"></ion-icon>
+      </ion-button>
+    </form>
+  </ion-toolbar>
+</ion-footer>

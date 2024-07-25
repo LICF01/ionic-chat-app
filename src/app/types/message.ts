@@ -14,3 +14,15 @@ export interface PrivateMessage {
   sent_at: string;
   type: string;
 }
+
+export interface PostGroupMessage {
+  sender_id: number;
+  group_id: number;
+  content: string;
+}
+
+export interface PostPrivateMessage {
+  sender_id: number;
+  receiver_id: number;
+  content: string;
+}

@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { GroupMessage, PrivateMessage } from '../types/message';
+import {
+  GroupMessage,
+  PostGroupMessage,
+  PostPrivateMessage,
+  PrivateMessage,
+} from '../types/message';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +31,12 @@ export class ChatService {
 
   getGroupMessagesByGroup(groupId: number) {
     return this.http.get<GroupMessage[]>(this.groupMessagesByGroup + groupId);
+  }
+
+  postGroupMessage(message: PostGroupMessage) {
+    return this.http.post(environment.API_URL + '/group-messages', message);
+  }
+  postPrivateMessage(message: PostPrivateMessage) {
+    return this.http.post(environment.API_URL + '/private-messages', message);
   }
 }

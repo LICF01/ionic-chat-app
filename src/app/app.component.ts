@@ -8,6 +8,7 @@ import {
   chatbubblesOutline,
   exitOutline,
   peopleOutline,
+  sendOutline,
 } from 'ionicons/icons';
 import { AuthService } from './services/auth.service';
 import { HttpClient } from '@angular/common/http';
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
       chatbubblesOutline,
       exitOutline,
       peopleOutline,
+      sendOutline,
     });
   }
 
