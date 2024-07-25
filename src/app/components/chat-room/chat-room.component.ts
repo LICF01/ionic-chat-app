@@ -41,10 +41,11 @@ export class ChatRoomComponent implements OnInit {
       let id = params['id'].split('-')[1];
       let type = params['id'].split('-')[0];
 
-      console.log(id, type);
       if (type === 'group') {
         this.chatService.getGroupMessagesByGroup(id).subscribe((response) => {
-          this.groupMessages.set(response);
+          const sortedMessages = this.sortMessagesByDate(response);
+          console.log(sortedMessages);
+          this.groupMessages.set(sortedMessages);
           this.privateMessages.set([]);
         });
       } else if (type === 'user') {
@@ -53,11 +54,26 @@ export class ChatRoomComponent implements OnInit {
         if (!senderId || !receiverId) return;
         this.chatService
           .getPrivateMessagesByUsers(senderId, receiverId)
-          .subscribe((response) => {
-            this.privateMessages.set(response);
-            this.groupMessages.set([]);
+          .subscribe((response1) => {
+            this.chatService
+              .getPrivateMessagesByUsers(receiverId, senderId)
+              .subscribe((response2) => {
+                const sortedMessages = this.sortMessagesByDate([
+                  ...response1,
+                  ...response2,
+                ]);
+                console.log(sortedMessages);
+                this.privateMessages.set(sortedMessages);
+                this.groupMessages.set([]);
+              });
           });
       }
     });
+  }
+
+  sortMessagesByDate(messages: any[]): any[] {
+    return messages.sort(
+      (a, b) => new Date(a.sent_at).getTime() - new Date(b.sent_at).getTime(),
+    );
   }
 }

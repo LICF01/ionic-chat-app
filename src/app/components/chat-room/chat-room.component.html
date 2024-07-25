@@ -12,10 +12,6 @@
           }}</ion-chip>
         }
       }
-    } @else if (groupMessages().length === 0) {
-      <ion-text color="medium" class="empty">
-        No messages yet. Send a message to start the conversation.
-      </ion-text>
     } @else if (privateMessages().length > 0) {
       @for (message of privateMessages(); track message.id) {
         @if (message.sender_id === user()?.id) {
@@ -28,7 +24,9 @@
           }}</ion-chip>
         }
       }
-    } @else if (privateMessages().length === 0) {
+    } @else if (
+      privateMessages().length === 0 && groupMessages().length === 0
+    ) {
       <ion-text color="medium" class="empty">
         No messages yet. Send a message to start the conversation.
       </ion-text>
