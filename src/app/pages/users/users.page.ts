@@ -11,6 +11,9 @@ import {
   IonCardTitle,
 } from '@ionic/angular/standalone';
 import { UsersService } from 'src/app/services/users.service';
+import { User } from 'src/app/types/user';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -31,11 +34,18 @@ import { UsersService } from 'src/app/services/users.service';
   ],
 })
 export class UsersPage implements OnInit {
-  users = signal<any>([]);
-  constructor(private usersService: UsersService) {
+  users = signal<User[]>([]);
+  constructor(
+    private usersService: UsersService,
+    private router: Router,
+    private authService: AuthService,
+  ) {
     this.usersService.getUsers().subscribe({
       next: (response) => {
-        this.users.set(response);
+        const users = response.filter(
+          (user) => user.id !== this.authService.getCurrentUser()?.id,
+        );
+        this.users.set(users);
       },
       error: (error) => {
         console.error(error);
@@ -44,4 +54,8 @@ export class UsersPage implements OnInit {
   }
 
   ngOnInit() {}
+
+  onUserClick(user: User) {
+    this.router.navigate(['/users/', `user-${user.id}`]);
+  }
 }

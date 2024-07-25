@@ -6,6 +6,7 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonText,
 } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
@@ -16,11 +17,12 @@ import { User } from 'src/app/types/user';
   selector: 'app-chat-room',
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
-  imports: [IonContent, IonList, IonItem, IonLabel, IonChip],
+  imports: [IonContent, IonList, IonItem, IonLabel, IonChip, IonText],
   standalone: true,
 })
 export class ChatRoomComponent implements OnInit {
-  messages = signal<GroupMessage[]>([]);
+  groupMessages = signal<GroupMessage[]>([]);
+  privateMessages = signal<PrivateMessage[]>([]);
   user = signal<User | undefined>(undefined);
 
   constructor(
@@ -38,12 +40,23 @@ export class ChatRoomComponent implements OnInit {
     this.route.params.subscribe((params) => {
       let id = params['id'].split('-')[1];
       let type = params['id'].split('-')[0];
+
+      console.log(id, type);
       if (type === 'group') {
         this.chatService.getGroupMessagesByGroup(id).subscribe((response) => {
-          this.messages.set(response);
+          this.groupMessages.set(response);
+          this.privateMessages.set([]);
         });
       } else if (type === 'user') {
-        // this.chatService.getPrivateMessagesByUsers()
+        const senderId = this.user()?.id;
+        const receiverId = parseInt(id);
+        if (!senderId || !receiverId) return;
+        this.chatService
+          .getPrivateMessagesByUsers(senderId, receiverId)
+          .subscribe((response) => {
+            this.privateMessages.set(response);
+            this.groupMessages.set([]);
+          });
       }
     });
   }

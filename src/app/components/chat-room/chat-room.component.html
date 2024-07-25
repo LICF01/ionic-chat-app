@@ -1,15 +1,37 @@
 <ion-content [fullscreen]="true">
   <div class="container">
-    @for (message of messages(); track message.id) {
-      @if (message.sender === "user" + user()?.id) {
-        <ion-chip color="primary" class="from-me">{{
-          message.content
-        }}</ion-chip>
-      } @else {
-        <ion-chip color="medium" class="from-them">{{
-          message.content
-        }}</ion-chip>
+    @if (groupMessages().length > 0) {
+      @for (message of groupMessages(); track message.id) {
+        @if (message.sender === "user" + user()?.id) {
+          <ion-chip color="primary" class="from-me">{{
+            message.content
+          }}</ion-chip>
+        } @else {
+          <ion-chip color="medium" class="from-them">{{
+            message.content
+          }}</ion-chip>
+        }
       }
+    } @else if (groupMessages().length === 0) {
+      <ion-text color="medium" class="empty">
+        No messages yet. Send a message to start the conversation.
+      </ion-text>
+    } @else if (privateMessages().length > 0) {
+      @for (message of privateMessages(); track message.id) {
+        @if (message.sender_id === user()?.id) {
+          <ion-chip color="primary" class="from-me">{{
+            message.content
+          }}</ion-chip>
+        } @else {
+          <ion-chip color="medium" class="from-them">{{
+            message.content
+          }}</ion-chip>
+        }
+      }
+    } @else if (privateMessages().length === 0) {
+      <ion-text color="medium" class="empty">
+        No messages yet. Send a message to start the conversation.
+      </ion-text>
     }
   </div>
 </ion-content>

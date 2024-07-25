@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true">
   @for (user of users(); track user.id) {
-  <ion-card>
+  <ion-card (click)="onUserClick(user)">
     <ion-card-header>
       <ion-card-title>{{user.username}}</ion-card-title>
     </ion-card-header>

@@ -7,7 +7,10 @@ export interface GroupMessage {
 }
 
 export interface PrivateMessage {
-  id?: number;
   content: string;
-  group_id: number;
+  id: number;
+  receiver_id: number;
+  sender_id: number;
+  sent_at: string;
+  type: string;
 }

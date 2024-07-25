@@ -19,7 +19,7 @@ export class ChatService {
   }
 
   getPrivateMessagesByUsers(senderId: number, receiverId: number) {
-    return this.http.get<PrivateMessage>(
+    return this.http.get<PrivateMessage[]>(
       this.privatesURL + senderId + '/' + receiverId,
     );
   }
